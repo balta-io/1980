@@ -1,8 +1,8 @@
 import { Model } from 'mongoose';
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Customer } from "models/customer.model";
-import { Query } from 'models/query.model';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Customer } from 'src/modules/backoffice/models/customer.model';
+import { Query } from 'src/modules/backoffice/models/query.model';
 
 @Injectable()
 export class CustomerService {
@@ -30,7 +30,7 @@ export class CustomerService {
 
     // Lista um cliente pelo documento
     async find(document): Promise<Customer[]> {
-        return await this.model.find({ document: document }).exec();
+        return await this.model.find({ document }).exec();
     }
 
     // Lista vários clientes

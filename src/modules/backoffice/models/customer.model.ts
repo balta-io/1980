@@ -1,6 +1,6 @@
-import { Address } from "./address.model";
-import { CreditCard } from "./credit-card.model";
-import { Pet } from "./pet.model";
+import { Address } from 'src/modules/backoffice/models/address.model';
+import { CreditCard } from 'src/modules/backoffice/models/credit-card.model';
+import { Pet } from 'src/modules/backoffice/models/pet.model';
 
 export class Customer {
     constructor(
@@ -12,7 +12,7 @@ export class Customer {
         public shippingAddress: Address,
         public creditCard: CreditCard,
         public password: string,
-        public active: boolean
+        public active: boolean,
     ) {
 
     }

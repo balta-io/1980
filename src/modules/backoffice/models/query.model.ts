@@ -3,7 +3,7 @@ export class Query {
         public query: any,
         public fields: string,
         public skip: number = 0,
-        public take: number = 25
+        public take: number = 25,
     ) {
 
     }
