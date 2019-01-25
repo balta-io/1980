@@ -35,7 +35,7 @@ export class CustomerService {
 
     // Lista vários clientes
     async findAll(): Promise<Customer[]> {
-        return await this.model.find().exec();
+        return await this.model.find({}, 'firstName lastName name email document').exec();
     }
 
     // Consulta livre

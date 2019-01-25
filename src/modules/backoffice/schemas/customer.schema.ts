@@ -1,7 +1,11 @@
 import * as mongoose from 'mongoose';
 
 export const CustomerSchema = new mongoose.Schema({
-    name: {
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
         type: String,
         required: true,
     },
@@ -101,13 +105,9 @@ export const CustomerSchema = new mongoose.Schema({
             type: String,
         },
     },
-    password: {
-        type: String,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
-    },
-    active: {
-        type: Boolean,
-        required: true,
-        default: true,
     },
 });
