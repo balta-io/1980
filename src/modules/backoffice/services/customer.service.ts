@@ -3,49 +3,62 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Customer } from 'src/modules/backoffice/models/customer.model';
 import { Query } from 'src/modules/backoffice/models/query.model';
+import { Address } from '../models/address.model';
+import { Pet } from '../models/pet.model';
 
 @Injectable()
 export class CustomerService {
     constructor(@InjectModel('Customer') private readonly model: Model<Customer>) { }
 
-    // Cria um novo cliente
     async create(data: Customer): Promise<Customer> {
         const customer = new this.model(data);
         return await customer.save();
     }
 
-    // Atualiza os dados do cliente
+    async addBillingAddress(document: string, data: Address): Promise<Customer> {
+        const options = { upsert: true }; // new: true, setDefaultsOnInsert: true };
+        return await this.model.findOneAndUpdate({ document }, {
+            $set: {
+                billingAddress: data,
+            },
+        }, options);
+    }
 
-    // Adiciona um endereço de cobrança
+    async addShippingAddress(document: string, data: Address): Promise<Customer> {
+        const options = { upsert: true }; // new: true, setDefaultsOnInsert: true };
+        return await this.model.findOneAndUpdate({ document }, {
+            $set: {
+                shippingAddress: data,
+            },
+        }, options);
+    }
 
-    // Remove um endereço de cobrança
+    async createPet(document: string, data: Pet): Promise<Customer> {
+        const options = { upsert: true, new: true };
+        return await this.model.findOneAndUpdate({ document }, {
+            $push: {
+                pets: data,
+            },
+        }, options);
+    }
 
-    // Adiciona um endereço de entrega
+    async updatePet(document: string, id: string, data: Pet): Promise<Customer> {
+        return await this.model.findOneAndUpdate({ document, 'pets._id': id }, {
+            $set: {
+                'pets.$': data,
+            },
+        });
+    }
 
-    // Remove um endereço de entrega
-
-    // Adiciona um pet
-
-    // Remove um pet
-
-    // Lista um cliente pelo documento
-    async find(document): Promise<Customer[]> {
+    async find(document): Promise<Customer> {
         return await this.model.find({ document }).exec();
     }
 
-    // Lista vários clientes
     async findAll(): Promise<Customer[]> {
         return await this.model.find({}, 'firstName lastName name email document').exec();
     }
 
-    // Consulta livre
     async query(model: Query): Promise<Customer[]> {
         return await this.model.find(model.query, model.fields, { skip: model.skip, limit: model.take }).exec();
     }
-
-    // Lista os pets de um cliente
-
-    // Busca um cliente pelo CPF
-
-    // Busca um Pet pelo nome
 }

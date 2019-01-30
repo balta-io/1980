@@ -1,11 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export const CustomerSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-    },
-    lastName: {
+    name: {
         type: String,
         required: true,
     },
@@ -27,6 +23,9 @@ export const CustomerSchema = new mongoose.Schema({
     },
     pets: [
         {
+            id: {
+                type: String,
+            },
             name: {
                 type: String,
             },
